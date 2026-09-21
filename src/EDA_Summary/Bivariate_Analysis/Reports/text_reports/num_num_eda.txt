@@ -1,0 +1,85 @@
+**Executive Summary – Bivariate Relationships Across Sales‑Related Variables**  
+
+**Scope** – The analysis is based exclusively on the four pre‑calculated bivariate metric tables (Pearson, Spearman, Kendall, Mutual Information) derived from a 15 000‑record Excel workbook. No external data or assumptions were introduced.  
+
+---
+
+### 1. Strong Linear Relationships (Pearson)
+
+| Pair (Feature 1 ↔ Feature 2) | Pearson r | p‑value | Interpretation |
+|------------------------------|-----------|---------|----------------|
+| **Unit_Price ↔ Total_Amount** | **0.835066** | **0** (statistically significant) | A near‑perfect positive linear association – total sales amount is driven almost entirely by the price per unit. |
+| **Quantity ↔ Total_Amount** | 0.255942 | 5.72 × 10⁻²²³ | Moderate positive linear link – larger order quantities raise total amount, though the relationship is weaker than price‑amount. |
+| All other pairs | | | **Absolute r ≤ 0.04** and p‑values > 0.05 (except the two above), indicating negligible linear dependence. |
+
+**Key takeaway:** *Unit price and total amount constitute the only robust linear relationship in the dataset.* Business processes that adjust unit price will have a direct, measurable impact on revenue.
+
+---
+
+### 2. Monotonic / Rank‑Based Trends (Spearman & Kendall)
+
+| Pair | Spearman ρ | Kendall τ | p‑value | Direction |
+|------|------------|----------|---------|-----------|
+| **Unit_Price ↔ Total_Amount** | **0.867733** | **0.696873** | 0 | Strong positive monotonic trend (consistent with Pearson). |
+| **Quantity ↔ Total_Amount** | 0.439993 | 0.34405 | 0 | Positive monotonic association, confirming that larger order sizes increase total spend. |
+| **Discount ↔ Total_Amount** | –0.0834882 | –0.0608023 | 1.28 × 10⁻²⁴ | Negative monotonic trend – higher discount percentages are linked to lower total amounts, though the effect size is modest. |
+| All other pairs | | | | **|ρ|,|τ| ≤ 0.01** and p‑values > 0.05, indicating no meaningful rank‑based relationship. |
+
+**Key takeaway:** *Rank‑based metrics reinforce the linear picture: Unit price and quantity are the primary drivers of total amount; discount shows a weak inverse monotonic pattern.*
+
+---
+
+### 3. Non‑Linear Dependencies (Mutual Information)
+
+Mutual information captures any statistical dependence—linear or not—by measuring the reduction in uncertainty about one variable given the other.
+
+| Pair | Mutual Information (bits) | Direction of asymmetry |
+|------|---------------------------|------------------------|
+| **Quantity ↔ Total_Amount** | **0.362531** (≈ 0.36) | Symmetric – the amount of information each variable provides about the other is virtually identical. |
+| **Unit_Price ↔ Total_Amount** | **2.59112** | Symmetric – the relationship is extremely strong; knowing either variable predicts the other with high precision. |
+| **Quantity ↔ Delivery_Days** | 0.0116212 | Asymmetric – delivery time carries slightly more information about order quantity than vice‑versa (likely because larger orders may be scheduled for faster delivery). |
+| **Age ↔ Quantity** | 0.0111692 | Very weak; age contributes little to understanding order size. |
+| **Age ↔ Unit_Price**, **Age ↔ Total_Amount**, **Unit_Price ↔ Discount**, **Unit_Price ↔ Delivery_Days**, **Discount ↔ Rating**, etc. | 0 (or negligible) | No detectable non‑linear association. |
+
+**Key takeaway:** *The only substantive non‑linear dependencies are between **Quantity** and **Total_Amount**, and between **Unit_Price** and **Total_Amount**. All other variable pairs show negligible mutual information, indicating that any relationship they may have is essentially linear or absent.*
+
+---
+
+### 4. Business Insights & Patterns
+
+| Insight | Supporting Metrics | Business Implication |
+|---------|-------------------|----------------------|
+| **Price is the dominant lever for revenue** | Pearson r = 0.835 (Unit_Price ↔ Total_Amount); MI = 2.59 bits | Small changes in unit price will translate into large swings in total sales; pricing strategy should be a focal point for growth. |
+| **Order volume matters, but less than price** | Pearson r = 0.256 (Quantity ↔ Total_Amount); MI = 0.36 bits | Incentivising larger basket sizes (e.g., bundle offers) can boost revenue, but the impact is modest compared with price adjustments. |
+| **Discounts modestly reduce revenue** | Spearman ρ = –0.0835 (Discount ↔ Total_Amount); Kendall τ = –0.0608; Pearson r = –0.0412 (p < 0.001) | Aggressive discounting may erode total amount; targeted promotions rather than site‑wide discounts could preserve revenue. |
+| **Delivery time is weakly linked to order characteristics** | Weak negative correlations (e.g., Quantity ↔ Delivery_Days = –0.0097; Pearson p = 0.234) and very low MI values (≈ 0) | Delivery performance is not a strong predictor of order size or price; improvements in delivery speed are unlikely to affect revenue directly. |
+| **Customer age and rating show virtually no relationship to other variables** | All Pearson, Spearman, Kendall, and MI values ≤ 0.011; p‑values > 0.2; MI ≈ 0 | Age and customer rating are not useful predictors of purchase size or price; they may be relevant for segmentation or loyalty programs, but not for volume or revenue modeling. |
+
+---
+
+### 5. Anomalies & Limitations Noted in the Data
+
+1. **Zero‑variance pairs** – Mutual information is exactly 0 for several pairs (e.g., Age ↔ Unit_Price, Age ↔ Total_Amount, Unit_Price ↔ Discount). This signals that the variables are statistically independent; any observed association is due to random noise, not a true relationship.
+
+2. **Extreme p‑values** – The Pearson p‑value for Unit_Price ↔ Total_Amount is reported as “0,” indicating a p‑value smaller than the machine’s precision limit. This underscores the statistical certainty of the linear link.
+
+3. **Inconsistent directionality in MI** – For most pairs the two MI columns (feature 1 → feature 2 and feature 2 → feature 1) are identical, confirming symmetric dependence (e.g., Quantity ↔ Total_Amount). However, a few pairs (Age ↔ Quantity, Quantity ↔ Delivery_Days) show asymmetry, suggesting that the direction of information flow differs slightly—potentially reflecting that one variable has more distinct values or a more deterministic influence on the other.
+
+4. **Sample size uniformity** – All analyses use the same 15 000‑record sample, so the p‑values are comparable across metrics; however, the sheer size may inflate the sensitivity to tiny correlations (e.g., Age ↔ Quantity Pearson r = 0.011), which are statistically significant but practically irrelevant.
+
+---
+
+### 6. Recommendations for Stakeholders
+
+| Recommendation | Rationale |
+|----------------|-----------|
+| **Prioritize pricing analytics** – Invest in models that forecast revenue based on unit price changes, as this variable exhibits the strongest linear (Pearson r = 0.835) and rank (Spearman ρ = 0.868) relationship with total amount. |
+| **Bundle & volume incentives** – Since Quantity ↔ Total_Amount shows a moderate positive correlation (r = 0.256, MI = 0.36), targeted bundles or volume discounts can lift total sales without heavily compromising price. |
+| **Refine discount strategy** – The negative monotonic link (Spearman ρ = –0.0835) suggests that broad, indiscriminate discounts may reduce total revenue; consider tiered or performance‑based discounting. |
+| **Monitor delivery metrics separately** – Delivery days have weak, non‑significant relationships with other variables; focusing on delivery speed may improve customer satisfaction but is unlikely to impact revenue directly. |
+| **Leverage age and rating for segmentation, not revenue prediction** – Their negligible correlations indicate they are poor predictors of purchase size or price; they can be used for customer‑experience initiatives (e.g., age‑specific promotions, rating‑driven loyalty tiers) rather than financial forecasting. |
+| **Validate with higher‑frequency data** – The current 15 000‑record snapshot may mask short‑term fluctuations; periodic re‑analysis (e.g., monthly) will confirm whether the strong price‑revenue link persists. |
+
+---
+
+**Conclusion** – The bivariate analysis unequivocally identifies **unit price** and **order quantity** as the primary drivers of **total sales amount**, with a robust linear and monotonic relationship confirmed across Pearson, Spearman, Kendall, and mutual information metrics. All other examined variables (age, rating, discount, delivery days, etc.) exhibit either negligible or very weak associations, highlighting that revenue‑focused decisions should concentrate on pricing and volume levers rather than on customer age or rating characteristics.

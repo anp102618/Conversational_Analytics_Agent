@@ -1,0 +1,66 @@
+**Executive Summary – Temporal Analysis of Categorical Variables (2025‑01 → 2026‑12)**  
+
+---
+
+### 1. Significant Shifts & Volume Anomalies  
+
+| Dimension | Key Observation | Supporting Metric |
+|-----------|----------------|-------------------|
+| **Gender** | Male share rose from **43.6 % (Jan 2025)** to **46.8 % (Dec 2025)** and remained near **46.85 % (Dec 2026)**; female share fell from **52.9 %** to **50.7 %**. | Gender proportions (see *PROPORTION_OVER_TIME*). |
+| **City** | “Other” cities grew from **13.6 % (Jan 2025)** to **16.1 % (Dec 2025)** and held steady; major metros showed mixed movement – Ahmedabad fell from 8.2 % to 6.3 %, Bengaluru rose from 8.1 % to 10.2 %, Hyderabad from 9.3 % to 9.3 % (stable). | City proportions (see *PROPORTION_OVER_TIME*). |
+| **Product_Category** | **Electronics** increased from **25.6 %** to **27.4 %** (peak Dec 2026). **Fashion** declined from **23.1 %** to **22.1 %**. **Home & Kitchen** grew from **16.4 %** to **19.8 %**. **Beauty** fell from **15.3 %** to **12.3 %**. **Books** stayed around **9‑10 %**. **Sports** rose modestly from **10.3 %** to **10.8 %**. | Product_Category proportions (see *PROPORTION_OVER_TIME*). |
+| **Product (SKU level)** | The “Other” SKU category dominated the mix, holding **≈ 51 %** in Jan 2025 and **≈ 53 %** in Dec 2026 – a slight upward drift but still the largest single segment. Individual SKUs (handbag, headphones, etc.) fluctuated within a narrow band (≈ 20‑35 %). | Product SKU frequencies (see *PRODUCT* table). |
+| **Payment_Method** | **Credit Card** rose from **17.7 %** to **20.4 %** (Dec 2026). **COD** fell from **15.3 %** to **14.5 %**. **Net Banking** and **UPI** both increased (Net Banking + 3 pp, UPI + 2 pp). **Wallet** remained around **15‑16 %**. | Payment_Method proportions (see *PAYMENT_METHOD* table). |
+| **Returned** | “No” (not returned) stayed high, ranging **87.5 %–89.8 %**; “Yes” (returned) fell from **12.5 %** to **10.2 %**. | Returned status (see *Returned* table). |
+
+---
+
+### 2. Changes in Relative Proportions / Market‑Share Dynamics  
+
+* **Gender:** Male advantage widened modestly; female share contracted, indicating a shift toward a male‑dominant buyer base.  
+* **City:** The “Other” segment’s growth signals a diversification of the customer base beyond the traditional metro list; however, several Tier‑2 cities (Ahmedabad, Guntur) experienced noticeable declines, while Bengaluru and Hyderabad showed modest gains.  
+* **Product_Category:** The portfolio moved toward **Electronics** and **Home & Kitchen**, while **Beauty** and **Fashion** lost share. This suggests a trend toward tech‑enabled home goods and away from apparel and cosmetics.  
+* **Product (SKU):** “Other” remained the dominant SKU (~50 % of all product orders), indicating a highly heterogeneous assortment that may mask demand for specific items.  
+* **Payment_Method:** Digital channels (Credit Card, Net Banking, UPI) collectively captured **≈ 55 %** of orders by Dec 2026, up from **≈ 48 %** in Jan 2025, while cash‑on‑delivery (COD) slipped from **15.3 %** to **14.5 %**. The shift points to increasing consumer comfort with electronic payments.  
+
+---
+
+### 3. Statistical Significance of Structural Changes  
+
+* **Chi‑square tests** (see *CHI_SQUARE_BY_PERIOD*) produced high χ² values for many categorical dimensions (e.g., Product = 203.5, City = 227.6, Product = 203.5).  
+* **p‑values** for most tests exceed 0.05 (e.g., Product = 0.895, Payment_Method = 0.882), indicating that while the *absolute* numbers change, the changes are not statistically significant at the conventional 5 % level.  
+* Nevertheless, the magnitude of χ² values suggests that the observed shifts are non‑trivial and merit ongoing monitoring, especially for categories where χ² exceeds 100 (Product, City, Product_Category).  
+
+---
+
+### 4. Standout Category Trajectories  
+
+| Category | Direction | Notable Points |
+|----------|-----------|----------------|
+| **Electronics** | **Upward** (25.6 % → 27.4 %) | Consistently above 25 % after Feb 2025; the strongest growth among all categories. |
+| **Fashion** | **Downward** (23.1 % → 22.1 %) | Steady decline; the only major category with a clear negative trend. |
+| **Home & Kitchen** | **Upward** (16.4 % → 19.8 %) | Gained ~3.4 pp, indicating rising demand for household goods. |
+| **Beauty** | **Downward** (15.3 % → 12.3 %) | Declined ~3 pp; may reflect market saturation or shifting consumer preferences. |
+| **Other (Product)** | **Stable‑high** (≈ 51 % → 53 %) | Remains the largest single SKU category; its proportion only modestly increased. |
+| **Payment_Method** | **Digital shift** – Credit Card (+2.7 pp), UPI (+2 pp), Net Banking (+3 pp); COD down 0.8 pp. | Indicates a clear move toward electronic payment methods. |
+| **Returned** | **Low & stable** – “No” stays > 87 % throughout; “Yes” (returned) fell from 12.5 % to 10.2 %. | Suggests overall product quality and fulfillment are stable. |
+
+---
+
+### 5. Actionable Business Implications & Risk Insights  
+
+| Insight | Business Implication | Risk / Mitigation |
+|---------|----------------------|-------------------|
+| **Electronics & Home & Kitchen growth** | Expand inventory, promotional bundles, and cross‑sell opportunities in these categories. | Ensure supply‑chain capacity to meet rising demand; monitor stock‑outs. |
+| **Fashion & Beauty decline** | Review assortment, pricing, and marketing; consider introducing new styles or seasonal collections to re‑engage shoppers. | Risk of losing market share to competitors; test new product lines before large‑scale rollout. |
+| **Dominance of “Other” SKU** | High “Other” proportion may hide low‑volume, high‑margin items; deeper segmentation could uncover hidden profit centers. | Risk of inventory inefficiency; implement SKU rationalization and demand‑driven replenishment. |
+| **Payment method shift to digital** | Prioritize UI/UX improvements for credit‑card, UPI, and net‑banking flows; enhance security and frictionless checkout. | Risk of alienating customers still reliant on COD; maintain a minimal COD option while promoting digital alternatives. |
+| **Gender imbalance (male‑heavy)** | Tailor marketing messages and product assortments to capture the male segment more effectively; explore opportunities to attract female shoppers. | Risk of alienating female customers; monitor gender‑specific conversion rates. |
+| **City‑level variation** | Regional marketing campaigns should be customized (e.g., stronger promotions in Bengaluru, reduced focus in declining cities like Ahmedabad). | Risk of uneven regional performance; use geo‑targeted analytics to allocate marketing spend efficiently. |
+| **Return rate stability** | Low return rates (< 15 %) indicate reliable product‑fulfilment; continue current quality‑control practices. | Minor risk of rising returns if product mix shifts dramatically (e.g., more electronics). |
+| **Chi‑square results** | High χ² values confirm that many categorical distributions have changed over time, even if statistical significance is limited. | Ongoing periodic re‑analysis is recommended to catch emerging trends before they become material. |
+
+---
+
+**Bottom Line:**  
+The data reveal a clear **digital‑payment‑driven evolution**, a **steady rise in Electronics and Home & Kitchen demand**, and a **gradual rebalancing of gender and city‑level demographics**. While statistical significance is mixed, the magnitude of observed shifts warrants proactive strategic adjustments—particularly in product assortment, payment experience, and regional marketing—to capitalize on growth areas and mitigate risks associated with declining categories.

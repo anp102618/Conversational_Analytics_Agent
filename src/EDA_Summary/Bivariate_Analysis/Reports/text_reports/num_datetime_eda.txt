@@ -1,0 +1,71 @@
+**Executive Summary – Temporal Behaviour of Key Order‑Level Metrics (Jan 2025 – Dec 2026)**  
+
+---
+
+### 1. Directional Trends, Seasonality & Cyclical Patterns  
+* **Overall trend strength** – The *Trend_Summary* table reports “Very weak / No clear trend” for every numeric feature (Spearman ρ ≈ ±0.01, p‑values > 0.14).  Consequently, no sustained upward or downward trajectory is evident across the 729‑day horizon.  
+* **Monthly seasonality (Period_Summary, frequency = M)** –  
+  * **Delivery_Days**: Peaks in the final month (Dec 2026 = 4.588 days) and troughs in Apr 2026 (4.248 days).  A modest year‑end slowdown is visible.  
+  * **Total_Amount**: Highest average value in Jun 2026 (15 004.3) and lowest in Feb 2025 (10 060.5).  A clear mid‑year uplift recurs each year.  
+  * **Unit_Price**: Highest in Jul 2026 (8 559.3) and lowest in Feb 2025 (6 290.9).  Price spikes appear during the summer months.  
+  * **Discount**: Highest in Jun 2026 (12.81) and again in Nov 2026 (12.46); the lowest discount occurs in Sep 2025 (11.29).  Discount intensity therefore follows a summer‑autumn cycle.  
+  * **Age**: Mean age rises from ~31.9 in the first half of 2025 to ~32.9 in Nov 2026, indicating a gradual ageing of the customer base toward the end of the observation window.  
+
+These periodic peaks (June–July for amount & discount, spring for quantity, year‑end for delivery time) suggest **seasonal promotional campaigns or inventory cycles** that modulate order size, pricing, and fulfillment speed.
+
+---
+
+### 2. Strength & Direction of Monotonic (Spearman) Relationships Over Time  
+* All Spearman time‑correlations are **very weak** (|ρ| ≤ 0.0119) with **p‑values > 0.14**, except Age (ρ = 0.0106, p = 0.194) and Discount (ρ = 0.0058, p = 0.481).  None cross the conventional significance threshold (p < 0.05).  
+* **Interpretation** – Temporal monotonic links between the variables and order date are negligible; the data do not support a strong causal or linear time‑dependent relationship for any metric.
+
+---
+
+### 3. Insights from Temporal Aggregations (Monthly Periods)  
+* **Peak Volumes & Baseline Shifts** –  
+  * **Total_Amount** and **Discount** reach their maximum monthly averages in **June 2026** (≈ 15 k and 12.8 % respectively).  This aligns with the observed price peak in July, hinting at a coordinated promotional period that drives both spend and discount usage.  
+  * **Quantity** is highest in **April 2025** (2.01 items) and remains elevated through the spring months, suggesting a seasonal demand surge that precedes the summer price peak.  
+  * **Delivery_Days** show the longest average delivery time in **December 2026** (4.59 days) versus a low of 4.25 days in January 2026, implying a year‑end fulfillment bottleneck.  
+* **Baseline Shifts** – The *average_period_mean* for **Age** drifts upward from 32.56 (May 2025) to 32.91 (Nov 2026), a ~1 % increase that may reflect a growing proportion of older or higher‑value customers toward the year’s end.
+
+---
+
+### 4. Volatility, Smoothing & Anomaly Signals (Rolling 7‑Day Window)  
+| Metric | Latest Value | 7‑Day Rolling Mean | % vs Rolling Mean | Notable Observation |
+|--------|--------------|-------------------|-------------------|---------------------|
+| **Discount** | 0 | 6.43 | **‑100 %** | Sudden collapse to zero – potential data‑entry error or promotion termination. |
+| **Rating** | 2.5 | 3.93 | **‑36 %** | Sharp decline; may signal a temporary dip in customer satisfaction. |
+| **Delivery_Days** | 7 | 5.43 | **+29 %** | Elevated delivery time relative to recent history – possible logistics strain. |
+| **Age** | 25 | 34.86 | **‑28 %** | Unusual drop; could indicate a shift in the age distribution (e.g., new younger cohort). |
+| **Total_Amount** | 3 740.28 | 3 060.59 | **+22 %** | Strong upward spike; may reflect a high‑value order or batch of orders. |
+| **Unit_Price** | 1 870.14 | 2 368.07 | **‑21 %** | Marked decrease; could be a pricing promotion or a shift to lower‑priced SKUs. |
+| **Quantity** | 2 | 1.86 | **+7 %** | modest increase, consistent with normal variance. |
+
+* **Volatility** – The rolling standard deviations (e.g., 11.07 for Discount, 1799.25 for Total_Amount) reveal **high variance** in discount and revenue metrics, while Quantity and Delivery_Days are comparatively stable.  
+* **Anomalies** – The zero Discount value, the 28 % drop in Age, and the 22 % surge in Total_Amount are the most pronounced deviations from the recent rolling mean and merit immediate data‑quality checks and deeper investigation.
+
+---
+
+### 5. Actionable Business Implications, Risks & Forecasting Recommendations  
+
+| Area | Insight | Business Implication | Recommended Action |
+|------|---------|----------------------|--------------------|
+| **Delivery Performance** | Delivery times peak in Dec 2026 (4.59 days) and show a 29 % increase vs rolling mean on the latest day. | Potential fulfillment bottlenecks during the holiday season could erode customer satisfaction and increase churn. | • Deploy additional staff or automation in Q4.<br>• Implement real‑time delivery‑time monitoring and trigger alerts when > 4 days.<br>• Use the 7‑day rolling mean to smooth daily fluctuations for early‑warning dashboards. |
+| **Revenue & Pricing** | Total_Amount spikes in Jun/Jul (≈ +22 % vs rolling mean) while Unit_Price falls sharply (‑21 %). Discount also peaks in Jun (12.8 %). | A promotional period drives higher spend but with lower average unit prices and higher discount usage, compressing margins. | • Analyse the composition of high‑value orders in Jun/Jul to understand drivers (SKU mix, bundle offers).<br>• Model margin impact of discount intensity; consider caps or tiered discount structures to protect profitability.<br>• Forecast revenue using a seasonal decomposition (monthly) that captures the June‑July uplift. |
+| **Customer Age & Satisfaction** | Age shows a modest upward trend toward Dec 2026; Rating drops 36 % on the latest day. | An aging customer base may have different purchasing behaviour; a recent dip in rating could foreshadow churn. | • Segment customers by age cohort and monitor satisfaction trends.<br>• Investigate the cause of the recent rating decline (e.g., service issue, product change). |
+| **Discount Management** | Discount collapses to zero on the last day, a 100 % deviation from its rolling mean. | Unexpected loss of discount may affect price perception and could be a data glitch. | • Validate the zero‑discount record; confirm whether it reflects a real promotion end or a data entry error.<br>• Incorporate discount volatility into risk models; consider smoothing with a longer rolling window to reduce noise. |
+| **Quantity & Order Size** | Quantity peaks in Apr 2025 (2.01) and remains relatively stable; no clear trend. | Order size is a stable driver; fluctuations are minor. | • Use the stable quantity pattern to benchmark inventory planning; no major capacity adjustments required. |
+| **Forecasting Approach** | Weak overall trends, strong monthly seasonality, and high volatility in revenue‑related metrics. | Traditional linear time‑series models may under‑perform. | • Apply **seasonal ARIMA / Prophet** models with explicit monthly seasonality.<br>• Augment with **rolling‑average features** (7‑day, 30‑day) to capture short‑term volatility.<br>• Conduct sensitivity analysis on discount and unit‑price assumptions, given their high variance. |
+
+**Key Risks**  
+* **Data quality** – The extreme drop in Discount (0) and Rating (2.5) suggests possible reporting anomalies that could mislead decision‑making.  
+* **Margin erosion** – High discount levels coupled with lower unit prices in the summer months may pressure gross margins if not managed.  
+* **Fulfillment capacity** – Year‑end delivery‑time extensions could impact service level agreements and customer retention.
+
+**Strategic Recommendations**  
+1. **Seasonal Planning** – Align inventory, staffing, and promotional budgets with the identified June‑July demand surge and the December delivery‑time peak.  
+2. **Margin Guardrails** – Introduce discount caps or tiered rebate structures during high‑discount months to protect profitability.  
+3. **Real‑time Monitoring** – Deploy rolling‑mean dashboards for Delivery_Days, Total_Amount, and Discount to detect anomalies early.  
+4. **Customer Insight** – Track age‑segmented satisfaction (Rating) and churn risk, especially as the average age climbs toward the end of the horizon.  
+
+By leveraging the observed seasonal patterns, smoothing volatile metrics, and addressing the identified anomalies, the business can improve forecast accuracy, safeguard margins, and enhance operational resilience across the 2025‑2026 period.

@@ -1,0 +1,77 @@
+**Executive Summary – NUM‑CAT Exploratory Analysis**
+
+---
+
+### 1. Significant group differences (numerical features vs. categorical segments)  
+The only formal significance tests supplied are the Welch t‑tests and Mann‑Whitney U comparisons for the binary “Returned / Not Returned” split.  
+
+| Feature | Comparison | Parametric p‑value | Non‑parametric p‑value | Interpretation |
+|---------|------------|-------------------|------------------------|----------------|
+| **Age** | Not Returned vs. Returned | 0.69 (ns) | 0.42 (ns) | No evidence of a age‑related return effect. |
+| **Quantity** | Not Returned vs. Returned | 0.19 (ns) | 0.11 (ns) | Quantity does not differ by return status. |
+| **Unit Price** | Not Returned vs. Returned | 0.34 (ns) | 0.12 (ns) | Unit price is independent of return status. |
+| **Discount** | Not Returned vs. Returned | 0.93 (ns) | 0.88 (ns) | Discount levels are comparable for returned and not‑returned orders. |
+| **Rating** | Not Returned vs. Returned | **0.06** (borderline) | 0.11 (ns) | Parametric test hints at a small difference; non‑parametric does not confirm. |
+| **Delivery Days** | Not Returned vs. Returned | 0.56 (ns) | 0.67 (ns) | Delivery time does not differ by return status. |
+| **Total Amount** | Not Returned vs. Returned | 0.37 (ns) | **0.05** (borderline) | Non‑parametric test suggests a modest increase in spend for returned orders; parametric test does not reach significance. |
+
+*Aside from the borderline cases for **Rating** and **Total Amount**, none of the numeric features show statistically significant differences across the “Returned / Not Returned” groups. Consequently, the bulk of the descriptive differences (e.g., higher mean age for “Other” gender, higher unit price for “Female”, higher total amount for “Other” customers) are **not** supported by formal significance testing and should be treated as descriptive patterns rather than proven effects.*
+
+---
+
+### 2. Parametric vs. non‑parametric findings  
+
+* **Overall agreement** – For Age, Quantity, Unit Price, Discount, Delivery Days the two approaches reach the same conclusion (no significant difference).  
+* **Discrepancies** –  
+  * **Rating**: Welch’s t‑test (p ≈ 0.06) suggests a possible difference, whereas Mann‑Whitney U (p ≈ 0.11) does not. The effect is small (≈ 0.03 rating points).  
+  * **Total Amount**: Mann‑Whitney U (p ≈ 0.053) hints at a higher spend for returned orders, while the Welch t‑test (p ≈ 0.37) finds no significant difference. The mean difference (~ 649) represents roughly a 5 % lift, which could be practically relevant despite the statistical ambiguity.  
+
+Overall, the parametric and non‑parametric tests are consistent for most variables; the only notable divergence lies in the marginal significance of Rating and Total Amount.
+
+---
+
+### 3. Pairwise group insights (descriptive, post‑hoc style)  
+
+| Variable | Notable pairwise differences (means/medians) |
+|----------|---------------------------------------------|
+| **Age** | *Gender*: Other (32.84) > Male (32.30) ≈ Female (32.27). <br>*City*: Bengaluru (31.78) < Ahmedabad (32.64) ≈ Delhi (32.27). |
+| **Quantity** | *Gender*: Other (1.93) > Female (1.91) ≈ Male (1.88). <br>*City*: Guntur (1.94) > Kolkata (1.88) ≈ Mumbai (1.92). |
+| **Unit Price** | *Gender*: Female (7,510) > Male (7,331) > Other (7,238). <br>*City*: Bengaluru (8,133) > Ahmedabad (7,814) > Guntur (6,596). |
+| **Discount** | Slightly higher for “Other” (12.08) vs. Male (11.96); all groups sit around 12 %. |
+| **Rating** | *Gender*: Male (3.87) ≈ Female (3.87) > Other (3.85). <br>*City*: Warangal (3.87) ≈ Kolkata (3.89) > Chennai (3.83). |
+| **Delivery Days** | *Gender*: Other (4.51) > Female (4.49) ≈ Male (4.47). <br>*City*: Guntur (4.56) > Hyderabad (4.54) ≈ Kolkata (4.49). |
+| **Total Amount** | *Gender*: Other (13,963) > Female (12,925) > Male (12,098). <br>*City*: Bengaluru (13,928) ≈ Visakhapatnam (13,395) > Guntur (10,977). |
+| **Product‑level** (selected) | *Electronics*: Highest unit price (23,143) and total amount (39,440). <br>*Books*: Lowest unit price (777) and total amount (1,297). <br>*Hair Dryer*: Highest rating (3.99) and relatively high total amount (3,733). <br>*Shoes*: Lowest delivery days (4.25) and moderate total amount (4,017). |
+
+These patterns highlight where the data **visually** diverge, even though formal tests rarely flag them as significant.
+
+---
+
+### 4. Practical significance (effect‑size perspective)  
+
+*Effect‑size metrics are not supplied in the workbook; consequently, quantitative assessment of practical importance (e.g., Cohen’s d, η²) cannot be performed.  
+
+Nevertheless, the **magnitude of observed differences** can be examined:
+
+* **Rating** – The largest observed mean gap (Male 3.87 vs. Other 3.85) is ≈ 0.02 points on a 5‑point scale (< 0.5 % of the scale range). This is unlikely to have a material business impact.  
+* **Total Amount** – The mean difference between returned (13,136) and not‑returned (12,487) orders is ≈ 649, i.e., about **5 % of the mean total spend**. If the returned‑order cohort represents a meaningful customer segment (e.g., high‑value purchasers), the commercial impact could be non‑trivial despite the borderline p‑value.  
+* **Unit Price** – Female customers pay roughly **2 %** more per unit than males (7,510 vs. 7,331). Given the volume of transactions, this translates into a measurable revenue contribution.  
+
+In the absence of formal effect‑size values, the above qualitative estimates are the best indication of practical relevance.
+
+---
+
+### 5. Key business implications & patterns  
+
+| Insight | Business implication |
+|---------|----------------------|
+| **Gender‑linked pricing** – Female customers have higher average unit prices, yet similar purchase quantities. This suggests a potential upside: targeting female shoppers with premium‑priced or higher‑margin items could increase revenue. |
+| **City‑level price variation** – Bengaluru and Hyderabad command the highest unit prices, while Guntur and other Tier‑2 cities show lower prices. Pricing strategies may need to be regionalised; higher prices in metro‑type cities could be justified by higher disposable income or lower price sensitivity. |
+| **Product‑category revenue drivers** – Electronics and Home & Kitchen categories generate the largest total amounts (≈ 39 M and ≈ 23 M respectively) and also exhibit high unit prices. These categories merit focused inventory, promotion, and margin‑optimization efforts. |
+| **Return behaviour** – While return rates do not differ significantly by age, gender, or city, returned orders show a modestly higher total amount and slightly higher rating scores. This may indicate that **higher‑value or higher‑satisfaction purchases are more likely to be returned** (e.g., fit‑issues, change‑of‑mind). Monitoring return reasons and correlating them with product type and price could reduce return rates. |
+| **Delivery time heterogeneity** – Certain products (Cookware Set, Hair Dryer, Shoes) and cities (Guntur, Hyderabad) have higher average delivery days. Lengthy delivery cycles can erode customer satisfaction and increase logistics costs; targeted process improvements or localized fulfillment hubs may be warranted. |
+| **Customer‑lifetime value (CLV)** – The “Other” gender segment, despite being a small sample (n = 439), commands the highest total amount (≈ 14 M) and unit price, suggesting a niche high‑value customer base. Tailored marketing or loyalty programs for this segment could amplify revenue. |
+| **Age stability** – Age distributions are remarkably consistent across gender, city, product, and payment method. Age is not a driver of any observed behavioural differences, implying that age‑based segmentation may have limited ROI. |
+| **Quantity uniformity** – Median quantity per order is 2 across all demographic groups, indicating a standard purchase basket size. Variations are minimal, so upselling or bundling strategies should focus on product mix rather than order frequency. |
+
+**Overall take‑away:** The data reveal clear **price and spend differentials** across gender, city, and product categories, while **behavioural differences (returns, ratings, delivery days) are subtle and only marginally statistically significant**. Business actions should therefore prioritize **pricing optimisation, targeted marketing to high‑value segments, logistics optimisation for high‑delivery‑time items, and close monitoring of returned‑order patterns** rather than age‑based or broad demographic campaigns.

@@ -1,0 +1,93 @@
+**Executive Summary – Univariate Exploration**
+
+---
+
+### 1. Central Tendency & Dispersion  
+
+| Variable | Mean | Median | Typical Spread (SD) | CV (σ/μ) |
+|----------|------|--------|---------------------|----------|
+| **Age** | 32.30 | 32 | 8.94 | 0.28 |
+| **Quantity** | 1.90 | 2 | 1.08 | 0.57 |
+| **Unit_Price** | 7,418 | 2,481 | 13,958 | **1.88** |
+| **Discount** | 12.01 | 10 | 7.67 | 0.64 |
+| **Rating** | 3.87 | 3.9 | 0.73 | 0.19 |
+| **Delivery_Days** | 4.48 | 4 | 1.95 | 0.44 |
+| **Total_Amount** | 12,566 | 3,227 | 29,569 | **2.35** |
+
+*Key observations*  
+
+* **Age** is tightly clustered around the low‑30s with modest spread.  
+* **Quantity** and **Delivery_Days** show modest variability; their medians are only slightly above the means, indicating relatively symmetric central values.  
+* **Unit_Price** and **Total_Amount** have *much* higher standard deviations than their means, reflecting strong right‑skewness and heavy tails.  
+* The **coefficient of variation** is highest for **Total_Amount** (2.35) and **Unit_Price** (1.88), signalling that these variables are highly dispersed relative to their central location.
+
+---
+
+### 2. Distribution Shape, Skewness & Normality  
+
+| Variable | Skewness | Kurtosis | Mean‑Median Gap | Normality (p‑value) |
+|----------|----------|----------|-----------------|---------------------|
+| Age | **+0.86** (moderately right‑skewed) | **3.88** (leptokurtic) | +0.30 | 0 (reject) |
+| Quantity | **+1.12** (right‑skewed) | **0.48** (platykurtic) | –0.10 | 0 |
+| Unit_Price | **+3.58** (strongly right‑skewed) | **23.38** (very leptokurtic) | +4,937 | 0 |
+| Discount | **+0.32** (slightly right‑skewed) | **‑0.48** (platykurtic) | +2.0 | 8 × 10⁻¹¹¹ |
+| Rating | **‑0.33** (slightly left‑skewed) | **‑0.33** (platykurtic) | –0.03 | 4 × 10⁻⁸⁰ |
+| Delivery_Days | **+0.21** (slightly right‑skewed) | **‑0.26** (platykurtic) | +0.48 | 3 × 10⁻³⁷ |
+| Total_Amount | **+8.68** (extremely right‑skewed) | **218.9** (extremely leptokurtic) | +9,339 | 0 |
+
+*Interpretation*  
+
+* All variables **fail** formal normality tests (p = 0).  
+* **Skewness** is positive for the majority of variables, especially **Unit_Price** and **Total_Amount**, indicating long right‑hand tails.  
+* **Kurtosis** is markedly high for **Unit_Price**, **Total_Amount**, and **Age**, implying that the data contain heavy tails and peaked peaks relative to a normal distribution.  
+* **Rating** and **Discount** are the only variables with negative skew, but the magnitude is modest.
+
+---
+
+### 3. Data‑Quality Red Flags  
+
+| Issue | Variables Affected | Evidence |
+|-------|--------------------|----------|
+| **Missing values** | None | `missing_count = 0` for every feature. |
+| **Zero values** | **Discount** (1,740 zeros → 11.6 % of valid rows) | All other variables have 0 % zeros. |
+| **Negative values** | None | `negative_count = 0` across the board. |
+| **Low cardinality / high duplication** | **Quantity** (5 unique → 0.03 % unique), **Discount** (7 unique → 0.05 % unique) | Indicates many repeated or categorical entries rather than truly continuous values. |
+| **High cardinality / near‑unique** | **Unit_Price** (14,759 unique → 98.4 % unique), **Total_Amount** (14,877 unique → 99.2 % unique) | Suggests each transaction may be distinct; potential for outlier-driven inflation. |
+| **Outlier concentration** | **Unit_Price**, **Total_Amount**, **Quantity** | Outlier counts: 2,401 (16 %) for Unit_Price, 2,472 (16.5 %) for Total_Amount, 1,513 (10 %) for Quantity. |
+
+*Overall* – The dataset is complete (no missingness) but contains a non‑trivial proportion of zero discounts and a large number of extreme high‑value outliers, especially in monetary variables.
+
+---
+
+### 4. Outlier Analysis  
+
+| Variable | Outlier Count | % of Valid | Lower Bound | Upper Bound | Notable Extremes |
+|----------|---------------|------------|-------------|-------------|------------------|
+| **Age** | 90 | 0.6 % | 8 | 56 | Max = 99 (just beyond upper bound) |
+| **Quantity** | 1,513 | 10.1 % | –0.5 | 3.5 | Max = 5 (within bound, but many near‑upper) |
+| **Unit_Price** | 2,401 | 16.0 % | –2,606 | 7,675 | Max = 309,655 (far above upper bound) |
+| **Discount** | 0 | 0 % | –10 | 30 | No statistical outliers |
+| **Rating** | 73 | 0.49 % | 1.9 | 5.9 | Max = 5 (within bound) |
+| **Delivery_Days** | 24 | 0.16 % | –1.5 | 10.5 | Max = 14 (just above upper bound) |
+| **Total_Amount** | 2,472 | 16.5 % | –7,257 | 16,739 | Max = 1.24 × 10⁶ (well beyond upper bound) |
+
+*Take‑away*: The **price** and **total amount** variables contain the greatest proportion of outliers, many of which lie far beyond the calculated upper bounds, confirming the strong right‑skew and heavy‑tail behavior observed in the shape diagnostics.
+
+---
+
+### 5. Actionable Recommendations  
+
+| Recommendation | Rationale | Suggested Technique |
+|----------------|-----------|---------------------|
+| **Investigate zero discount entries** (1,740 zeros) | May represent data entry errors, free‑item promotions, or placeholder values that distort summary statistics. | Flag as “questionable”; consider imputing with the variable’s median (10) or removing if deemed erroneous. |
+| **Apply log‑transformation** to **Unit_Price** and **Total_Amount** | Both variables exhibit extreme skewness (skew > 3) and very high kurtosis, inflating mean and variance. | `log1p(x)` or `log(x)` prior to analysis; re‑evaluate descriptive stats and outlier bounds. |
+| **Winsorize or cap extreme values** in **Unit_Price** (max ≈ 309 k) and **Total_Amount** (max ≈ 1.2 M) | Outliers represent a small % of rows but dominate dispersion metrics, biasing models. | Set upper caps at, e.g., the 99th percentile (≈ 65 k for Unit_Price, ≈ 150 k for Total_Amount) or use robust scaling (e.g., robust Z‑score). |
+| **Review low‑cardinality variables** (Quantity, Discount) | Their limited unique values suggest they may be better treated as categorical or binned variables. | Encode as factors or create bins (e.g., quantity = {0‑1, 2‑3, >3}) to stabilize variance. |
+| **Standardize/normalize** after transformation | To bring all variables onto comparable scales for modeling (e.g., regression, clustering). | Use robust scaling (median & IQR) after log‑transform to mitigate remaining skew. |
+| **Document data‑quality notes** for stakeholders | Zero‑discount proportion (11.6 %) and high cardinality of price/amount need explanation (e.g., promotional pricing, separate price tiers). | Add metadata notes; consider creating a “discount_flag” variable to capture zero‑discount cases explicitly. |
+| **Re‑evaluate modeling assumptions** | Normality tests are all significant; parametric models may be inappropriate. | Prefer tree‑based models, robust regression, or non‑parametric methods; if parametric, use bootstrapped confidence intervals. |
+
+---
+
+**Bottom Line**  
+The dataset is complete but heavily skewed, with pronounced outliers in monetary variables, a non‑trivial proportion of zero discounts, and a mix of low‑ and high‑cardinality features. Transforming the highly skewed monetary fields (log‑scale) and applying outlier capping/winsorization will reduce distortion, improve model performance, and yield more reliable insights. Zero‑discount values should be examined and either cleaned or explicitly flagged. All other variables are relatively clean, with acceptable missing‑value and negative‑value records.
