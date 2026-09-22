@@ -1,0 +1,67 @@
+# Multivariate EDA
+
+
+================================================================================
+## multivariate_eda
+================================================================================
+
+**Executive Summary**
+
+**1. Multicollinearity Risks and Redundancy (VIF)**  
+- All variables exhibit VIF values essentially at 1 (range 1.00021 – 1.00031).  
+- This indicates **negligible multicollinearity**; no pair of predictors shows strong linear dependence that would threaten model stability.  
+- Consequently, feature‑selection or dimensionality‑reduction driven by collinearity is not required.
+
+**2. Dimensionality‑Reduction Insights (PCA)**  
+- The first five principal components together explain **100 % of the total variance** (cumulative = 1.0).  
+- Each component contributes roughly **20 %** of the variance (PC1 = 20.42 %, PC2 = 20.22 %, PC3 = 20.07 %, PC4 = 19.74 %, PC5 = 19.55 %).  
+- **Loadings** show that every original feature loads on all components, but the magnitude of absolute loadings varies:  
+  - PC1 is dominated by **Quantity (0.63)** and **Age (0.49)**; **Discount** and **Delivery_Days** have moderate negative loadings.  
+  - PC2 highlights **Discount (0.54)** and **Rating (0.55)** with opposite signs for **Age** and **Delivery_Days**.  
+  - PC4 places **Quantity (0.71)** and **Rating (0.50)** as the strongest contributors, while **Age** and **Delivery_Days** have relatively low absolute loadings.  
+- The spread of loadings across components suggests that the five PCs capture distinct linear combinations of the original variables, providing a compact representation for downstream modeling.
+
+**3. Non‑Linear Relationships, Primary Splitting Features, and Predictive Drivers (Decision Trees & Multivariate Models)**  
+- The classification tree uses **Rating** as the root split (threshold ≈ 1.34), indicating that the target variable is most discriminated by this metric.  
+- Subsequent splits repeatedly involve **Discount**, **Age**, **Delivery_Days**, **Quantity**, and **Product_Category_Home & Kitchen**, revealing **strong non‑linear interactions** among these variables.  
+- **Feature importance (tree‑based)**:  
+  1. **Age** (0.239) – highest importance.  
+  2. **Rating** (0.154) – second.  
+  3. **Discount** (0.133) – third.  
+  4. **Delivery_Days** (0.114) – fourth.  
+- **Random‑Forest feature importance** aligns closely: **Age** (0.170), **Rating** (0.159), **Delivery_Days** (0.114), **Discount** (0.095).  
+- **Model coefficients** (log‑odds) show negative impacts for most categorical levels (e.g., Gender_Male, City_Pune) and modest positive/negative effects for several payment and city categories, confirming that the model captures directional relationships but does not override the tree‑derived prominence of Age and Rating.
+
+**4. Feature Importances, Interactions, and Natural Groupings (Clusters)**  
+- **Synergistic two‑way interactions** with the largest target differences include:  
+  - *Rating × Delivery_Days* (Δ = 0.0294, n = 2838)  
+  - *Age × Quantity* (Δ = 0.0275, n = 4005)  
+  - *Discount × Delivery_Days* (Δ = 0.0268, n = 4279)  
+- **Three‑way interactions** such as *Age × Quantity × Discount* (Δ = 0.0481, n = 3393) highlight that the combined effect of these three variables drives a substantial portion of the variance.  
+- **Cluster analysis** (silhouette = 0.194, best k = 2) reveals two natural groups:  
+  - **Cluster 0** – higher values of Age (~32.3), Quantity (~1.37), Discount (~12.0), Rating (~3.86), and Delivery_Days (~4.49).  
+  - **Cluster 1** – slightly higher Age (~32.5), Quantity (~3.54), Discount (~11.98), Rating (~3.89), and Delivery_Days (~4.47).  
+- The clusters are modestly separated, suggesting that the two groups are primarily distinguished by subtle shifts in the same set of variables rather than by entirely distinct feature sets.
+
+**5. Multivariate Outliers, Structural Anomalies, and Recommendations**  
+
+- **Outlier detection**:  
+  - Isolation Forest flagged **14** rows as outliers (anomaly scores ranging from –0.078 to –0.039).  
+  - Mahalanobis distance identified **17** rows exceeding the chi‑square threshold (distance ≈ 57–68).  
+  - Several rows appear in both lists (e.g., row 1000, 14112, 6319), indicating genuine multivariate anomalies that merit investigation.  
+
+- **Structural anomalies**: The presence of multiple outliers suggests that the dataset contains **non‑representative cases** (e.g., extreme values of Age, Quantity, Discount, or Delivery_Days) that could bias model estimates.  
+
+- **Actionable Recommendations**  
+  1. **Data‑quality review**: Examine the flagged rows (rows 1000, 12740, 6002, 14029, etc.) to verify data entry errors, sensor glitches, or rare legitimate cases.  
+  2. **Robust preprocessing**: Consider winsorizing or transforming extreme values (e.g., log‑scale for Discount and Delivery_Days) before model training.  
+  3. **Leverage PCA**: Use the top two or three components (which together explain ~40 % of variance) as reduced‑dimensional inputs for models that benefit from orthogonal features, potentially improving computational efficiency and mitigating any residual collinearity.  
+  4. **Feature engineering based on interactions**:  
+     - Create interaction terms such as *Rating × Delivery_Days* and *Age × Quantity* to capture the strongest observed synergistic effects.  
+     - Encode *Product_Category_Home & Kitchen* and *City* variables with target‑aware encoding (e.g., mean‑encoding) to preserve the predictive power identified in the tree splits.  
+  5. **Cluster‑driven segmentation**: Apply the two‑cluster solution to downstream tasks (e.g., targeted marketing, pricing strategies) as the clusters represent coherent customer segments with distinct demographic and transaction patterns.  
+  6. **Model validation**: Given the high accuracy (≈ 87.7 %) and stable OOB score, maintain a hold‑out validation set that respects the cluster structure to ensure that performance generalizes across the identified segments.  
+
+**Bottom Line**  
+The dataset is largely free of multicollinearity, with variance captured efficiently by five PCA components. Tree‑based modeling highlights **Age** and **Rating** as the most influential predictors, while numerous significant interactions suggest that the relationship between the target and the features is inherently non‑linear. A modest number of multivariate outliers exist and should be scrutinized and, if needed, corrected. Leveraging PCA, interaction‑based feature engineering, and the identified two‑cluster segmentation should enhance model interpretability, robustness, and business relevance.
+

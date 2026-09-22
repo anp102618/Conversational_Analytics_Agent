@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     REDIS_URL: str
     NVIDIA_API_KEY: str
     NVIDIA_MODEL: str
+    HF_TOKEN: str
 
     paths: PathConfig = Field(default_factory=PathConfig)
     constants: AppConstants = Field(default_factory=AppConstants)

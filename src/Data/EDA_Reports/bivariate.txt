@@ -1,0 +1,408 @@
+# Bivariate EDA
+
+
+================================================================================
+## cat_cat_eda
+================================================================================
+
+**Executive Summary – Categorical Association Findings**
+
+---
+
+### 1. Statistically Significant Associations  
+*Chi‑square and Fisher’s exact p‑values are not supplied in the workbook (the “CHI‑SQUARE”, “CRAMER’S V” and “FISHER EXACT” metric sections are empty). Consequently, no formal tests of independence or exact‑test p‑values can be reported. The analysis below therefore relies on observed count patterns and the presence of sparse or low‑frequency cells, which would normally trigger a Fisher’s exact test.*
+
+---
+
+### 2. Strength of Association (Cramér’s V)  
+*Cramér’s V values are also absent from the supplied metrics. Without effect‑size estimates we can only comment qualitatively on the magnitude of the observed relationships (e.g., “high”, “moderate”, “low”) by examining the raw counts and percentages.*
+
+---
+
+### 3. Stand‑out Frequency Distributions & Cell‑Level Imbalances  
+
+| Dimension | Notable Patterns (counts / % from the contingency tables) |
+|-----------|----------------------------------------------------------|
+| **Gender × City** | • Female counts are remarkably consistent across cities (≈ 600 – 714, 4 % – 5 % of the total sample). <br>• Male counts are slightly lower (≈ 554 – 659, 3.7 % – 4.4 %). <br>• “Other” gender appears only in a handful of cities (44 – 46 cases, ≤ 0.3 % of each city’s total). |
+| **Gender × Product_Category** | • **Electronics** dominates both genders (≈ 12 % – 12.5 % of all rows). <br>• **Fashion** and **Home & Kitchen** follow (≈ 11 % – 11.0 % and 9.2 % – 9.2 %). <br>• **Beauty**, **Books**, **Sports** each account for roughly 5 %‑7 % of the sample. <br>• “Other” product categories are sparse (< 0.5 % each) and concentrated in a few cities. |
+| **Gender × Product** (individual SKUs) | • **Smartphone**, **Laptop**, **Tablet**, **Headphones**, **Handbag**, **Jacket**, **Jeans** and **T‑Shirt** each exceed 300 – 400 units, indicating strong demand. <br>• Low‑volume items (e.g., **Air Fryer**, **Bedsheet**, **Biography**, **Cookware Set**) appear in < 50 units in many cities, signalling niche interest. |
+| **Payment_Method × Gender** | • **COD** is the most frequent method for both genders (≈ 8 % – 8 % of all rows). <br>• **Credit Card** and **Debit Card** follow closely (≈ 9 % – 9.2 %). <br>• **Net Banking** and **UPI** each represent ~8 % of transactions. <br>• “Other” payment methods are rare (< 0.5 %). |
+| **Returned × Gender** | • **No** (i.e., not returned) is overwhelmingly the majority for all genders (≈ 87 % – 88 %). <br>• **Yes** (returned) accounts for only ~12 % – 13 % of cases, with slightly higher return rates for males (11.9 %) than females (12.4 %). |
+| **City × Product_Category** | • **Electronics** is the top category in every city, with values ranging from 279 (Mumbai) to 347 (Kolkata). <br>• **Fashion** and **Home & Kitchen** also show strong, relatively even distribution across cities. <br>• **Sports** and **Beauty** are less frequent but still present in all cities. |
+| **Payment_Method × City** | • **COD** leads in most cities (e.g., 221 in Ahmedabad, 218 in Delhi). <br>• **Credit Card** peaks in Delhi (249) and Kolkata (244). <br>• **UPI** is highest in Hyderabad (215) and Kolkata (225). |
+| **Returned × City** | • “No” (non‑return) dominates in all cities (≈ 86 % – 88 %). <br>• “Yes” (return) is highest in Kolkata (170) and lowest in Guntur (142). |
+| **Product × Payment_Method** (selected high‑volume SKUs) | • **Headphones** and **Handbag** show strong COD usage (≈ 100 % of their total counts are COD). <br>• **Laptop** and **Tablet** have a more balanced split between COD and Credit Card. |
+
+**Key take‑aways from the distribution patterns**
+
+* **Gender** does not appear to drive large differences in absolute purchase volumes; however, the “Other” gender is under‑represented, suggesting a data‑capture limitation rather than a true market segment.  
+* **Electronics** and **Fashion** are the two product families with the greatest overall demand, spanning all cities and gender groups.  
+* **Payment preferences** are relatively uniform across genders, with COD being the most common method, followed closely by credit‑card and debit‑card usage.  
+* **Return rates** are low overall (< 15 %), indicating a high level of purchase satisfaction or effective post‑sale processes.  
+
+---
+
+### 4. Data‑Quality Considerations  
+
+| Issue | Evidence from the tables | Implication |
+|-------|--------------------------|-------------|
+| **Sparse / low‑frequency cells** | • “Other” gender counts are ≤ 46 (≤ 0.3 % of city totals). <br>• Many product‑SKU combinations (e.g., Air Fryer, Bedsheet, Biography, Cookware Set, Cricket Bat, Data Science Book, Dumbbells, Exam Guide, Face Wash, Football, Hair Dryer, Handbag, Headphones, Jacket, Jeans, Lamp, Laptop, Makeup Kit, Mixer Grinder, Moisturizer, Novel, Perfume, Programming Book, Running Shoes, Shoes, Smartphone, Smartwatch, T‑Shirt, Tablet, Yoga Mat) have counts below 50 in several cities, with some as low as 1–30. <br>• Payment‑method “Other” categories contain only 65–75 cases. | These sparse cells violate the expected‑count assumptions of the chi‑square test and would normally require Fisher’s exact test. The absence of Fisher’s exact p‑values in the supplied metrics means that any significance claims would be speculative. |
+| **Uneven row/column totals** | Male row totals (≈ 7,067) are lower than female row totals (≈ 7,494), reflecting a slight gender imbalance in the sample. | May bias association measures if not adjusted; however, percentages are provided, mitigating the impact. |
+| **Missing or empty metric sections** | The “CHI‑SQUARE”, “CRAMER’S V”, and “FISHER EXACT” sections contain “No data available”. | Prevents a rigorous statistical assessment of independence; any conclusions about significance must be framed as exploratory rather than inferential. |
+| **Potential duplicate or missing rows** | The tables list every city‑product‑gender combination, but there are no explicit checks for missing entries or duplicated rows. | Incomplete data could under‑represent certain segments, affecting the reliability of any derived insights. |
+
+---
+
+### 5. Business Implications & Behavioral Patterns  
+
+1. **Product‑Category Focus** – The overwhelming presence of **Electronics**, **Fashion**, and **Home & Kitchen** indicates that these categories drive the bulk of revenue. Marketing and inventory strategies should prioritize these lines, especially in cities where their counts are highest (e.g., Kolkata, Mumbai, Delhi).
+
+2. **Gender‑Neutral Demand** – The relatively balanced counts of male and female purchases across most categories suggest that gender is not a primary driver of product preference. However, the “Other” gender category is under‑represented, hinting at a possible data‑collection gap that could be addressed to capture a broader market view.
+
+3. **Payment‑Method Preference** – **COD** remains the dominant payment method across all genders and cities, followed closely by credit‑card and debit‑card usage. This suggests that offering COD continues to be a critical component of the sales funnel, especially in markets where digital payment adoption may be lower.
+
+4. **Return‑Rate Insight** – With **> 85 %** of transactions marked “No” (not returned), the overall return‑rate is low (< 15 %). The modest variation by gender (males slightly higher return rates) could be explored for product‑specific issues (e.g., higher returns in electronics vs. fashion).
+
+5. **City‑Level Opportunities** –  
+   * **Kolkata** and **Mumbai** show the highest absolute counts for most product categories, indicating strong market size. Targeted promotions or localized assortments could capture additional share.  
+   * **Guntur**, **Visakhapatnam**, and **Warangal** have lower overall counts but still exhibit consistent demand for core categories (Electronics, Fashion, Home & Kitchen). These markets may represent growth opportunities where competition is less intense.
+
+6. **Product‑Specific Trends** –  
+   * **Smartphones**, **Laptops**, **Tablets**, and **Headphones** are the top‑selling individual SKUs, each surpassing 300 units city‑wide. This points to a robust demand for connected devices.  
+   * Low‑volume items such as **Air Fryer**, **Bedsheet**, and **Biography** suggest niche or seasonal interest; they may be candidates for bundled offers or cross‑selling campaigns.
+
+7. **Implications for Customer Segmentation** – The data reveal that **COD** is the preferred payment method across all segments, implying that the checkout experience should be optimized for cash‑on‑delivery logistics. The modest gender differences in return rates could be used to tailor after‑sales service: males may require more proactive support for returned items.
+
+8. **Data‑Quality Action Items** –  
+   * Conduct a data‑audit to verify that all “Other” gender and product entries are correctly captured.  
+   * For any analysis that requires statistical testing (e.g., chi‑square, Fisher’s exact), ensure that expected cell counts exceed the minimum thresholds (typically ≥ 5) or apply exact tests where sparsity is present.  
+   * Consider enriching the dataset with additional demographic or behavioural variables (e.g., age, income, purchase frequency) to deepen segmentation and uncover hidden associations.
+
+---
+
+**Conclusion**  
+The contingency tables reveal a clear market structure: a few dominant product categories (Electronics, Fashion, Home & Kitchen) drive most sales, with Electronics leading in volume. Gender does not appear to be a decisive factor in purchase behavior, while payment preferences are largely COD‑centric. Return rates are low, indicating overall satisfaction, though slight gender differences merit further investigation. The presence of many sparse cells means that any formal statistical testing (chi‑square, Cramér’s V, Fisher’s exact) is currently impossible with the supplied metrics; a data‑quality review and appropriate statistical adjustments are recommended before drawing definitive conclusions about association strength.
+
+
+================================================================================
+## cat_datetime_eda
+================================================================================
+
+**Executive Summary – Temporal Analysis of Categorical Variables (2025‑01 → 2026‑12)**  
+
+---
+
+### 1. Significant Shifts & Volume Anomalies  
+
+| Dimension | Key Observation | Supporting Metric |
+|-----------|----------------|-------------------|
+| **Gender** | Male share rose from **43.6 % (Jan 2025)** to **46.8 % (Dec 2025)** and remained near **46.85 % (Dec 2026)**; female share fell from **52.9 %** to **50.7 %**. | Gender proportions (see *PROPORTION_OVER_TIME*). |
+| **City** | “Other” cities grew from **13.6 % (Jan 2025)** to **16.1 % (Dec 2025)** and held steady; major metros showed mixed movement – Ahmedabad fell from 8.2 % to 6.3 %, Bengaluru rose from 8.1 % to 10.2 %, Hyderabad from 9.3 % to 9.3 % (stable). | City proportions (see *PROPORTION_OVER_TIME*). |
+| **Product_Category** | **Electronics** increased from **25.6 %** to **27.4 %** (peak Dec 2026). **Fashion** declined from **23.1 %** to **22.1 %**. **Home & Kitchen** grew from **16.4 %** to **19.8 %**. **Beauty** fell from **15.3 %** to **12.3 %**. **Books** stayed around **9‑10 %**. **Sports** rose modestly from **10.3 %** to **10.8 %**. | Product_Category proportions (see *PROPORTION_OVER_TIME*). |
+| **Product (SKU level)** | The “Other” SKU category dominated the mix, holding **≈ 51 %** in Jan 2025 and **≈ 53 %** in Dec 2026 – a slight upward drift but still the largest single segment. Individual SKUs (handbag, headphones, etc.) fluctuated within a narrow band (≈ 20‑35 %). | Product SKU frequencies (see *PRODUCT* table). |
+| **Payment_Method** | **Credit Card** rose from **17.7 %** to **20.4 %** (Dec 2026). **COD** fell from **15.3 %** to **14.5 %**. **Net Banking** and **UPI** both increased (Net Banking + 3 pp, UPI + 2 pp). **Wallet** remained around **15‑16 %**. | Payment_Method proportions (see *PAYMENT_METHOD* table). |
+| **Returned** | “No” (not returned) stayed high, ranging **87.5 %–89.8 %**; “Yes” (returned) fell from **12.5 %** to **10.2 %**. | Returned status (see *Returned* table). |
+
+---
+
+### 2. Changes in Relative Proportions / Market‑Share Dynamics  
+
+* **Gender:** Male advantage widened modestly; female share contracted, indicating a shift toward a male‑dominant buyer base.  
+* **City:** The “Other” segment’s growth signals a diversification of the customer base beyond the traditional metro list; however, several Tier‑2 cities (Ahmedabad, Guntur) experienced noticeable declines, while Bengaluru and Hyderabad showed modest gains.  
+* **Product_Category:** The portfolio moved toward **Electronics** and **Home & Kitchen**, while **Beauty** and **Fashion** lost share. This suggests a trend toward tech‑enabled home goods and away from apparel and cosmetics.  
+* **Product (SKU):** “Other” remained the dominant SKU (~50 % of all product orders), indicating a highly heterogeneous assortment that may mask demand for specific items.  
+* **Payment_Method:** Digital channels (Credit Card, Net Banking, UPI) collectively captured **≈ 55 %** of orders by Dec 2026, up from **≈ 48 %** in Jan 2025, while cash‑on‑delivery (COD) slipped from **15.3 %** to **14.5 %**. The shift points to increasing consumer comfort with electronic payments.  
+
+---
+
+### 3. Statistical Significance of Structural Changes  
+
+* **Chi‑square tests** (see *CHI_SQUARE_BY_PERIOD*) produced high χ² values for many categorical dimensions (e.g., Product = 203.5, City = 227.6, Product = 203.5).  
+* **p‑values** for most tests exceed 0.05 (e.g., Product = 0.895, Payment_Method = 0.882), indicating that while the *absolute* numbers change, the changes are not statistically significant at the conventional 5 % level.  
+* Nevertheless, the magnitude of χ² values suggests that the observed shifts are non‑trivial and merit ongoing monitoring, especially for categories where χ² exceeds 100 (Product, City, Product_Category).  
+
+---
+
+### 4. Standout Category Trajectories  
+
+| Category | Direction | Notable Points |
+|----------|-----------|----------------|
+| **Electronics** | **Upward** (25.6 % → 27.4 %) | Consistently above 25 % after Feb 2025; the strongest growth among all categories. |
+| **Fashion** | **Downward** (23.1 % → 22.1 %) | Steady decline; the only major category with a clear negative trend. |
+| **Home & Kitchen** | **Upward** (16.4 % → 19.8 %) | Gained ~3.4 pp, indicating rising demand for household goods. |
+| **Beauty** | **Downward** (15.3 % → 12.3 %) | Declined ~3 pp; may reflect market saturation or shifting consumer preferences. |
+| **Other (Product)** | **Stable‑high** (≈ 51 % → 53 %) | Remains the largest single SKU category; its proportion only modestly increased. |
+| **Payment_Method** | **Digital shift** – Credit Card (+2.7 pp), UPI (+2 pp), Net Banking (+3 pp); COD down 0.8 pp. | Indicates a clear move toward electronic payment methods. |
+| **Returned** | **Low & stable** – “No” stays > 87 % throughout; “Yes” (returned) fell from 12.5 % to 10.2 %. | Suggests overall product quality and fulfillment are stable. |
+
+---
+
+### 5. Actionable Business Implications & Risk Insights  
+
+| Insight | Business Implication | Risk / Mitigation |
+|---------|----------------------|-------------------|
+| **Electronics & Home & Kitchen growth** | Expand inventory, promotional bundles, and cross‑sell opportunities in these categories. | Ensure supply‑chain capacity to meet rising demand; monitor stock‑outs. |
+| **Fashion & Beauty decline** | Review assortment, pricing, and marketing; consider introducing new styles or seasonal collections to re‑engage shoppers. | Risk of losing market share to competitors; test new product lines before large‑scale rollout. |
+| **Dominance of “Other” SKU** | High “Other” proportion may hide low‑volume, high‑margin items; deeper segmentation could uncover hidden profit centers. | Risk of inventory inefficiency; implement SKU rationalization and demand‑driven replenishment. |
+| **Payment method shift to digital** | Prioritize UI/UX improvements for credit‑card, UPI, and net‑banking flows; enhance security and frictionless checkout. | Risk of alienating customers still reliant on COD; maintain a minimal COD option while promoting digital alternatives. |
+| **Gender imbalance (male‑heavy)** | Tailor marketing messages and product assortments to capture the male segment more effectively; explore opportunities to attract female shoppers. | Risk of alienating female customers; monitor gender‑specific conversion rates. |
+| **City‑level variation** | Regional marketing campaigns should be customized (e.g., stronger promotions in Bengaluru, reduced focus in declining cities like Ahmedabad). | Risk of uneven regional performance; use geo‑targeted analytics to allocate marketing spend efficiently. |
+| **Return rate stability** | Low return rates (< 15 %) indicate reliable product‑fulfilment; continue current quality‑control practices. | Minor risk of rising returns if product mix shifts dramatically (e.g., more electronics). |
+| **Chi‑square results** | High χ² values confirm that many categorical distributions have changed over time, even if statistical significance is limited. | Ongoing periodic re‑analysis is recommended to catch emerging trends before they become material. |
+
+---
+
+**Bottom Line:**  
+The data reveal a clear **digital‑payment‑driven evolution**, a **steady rise in Electronics and Home & Kitchen demand**, and a **gradual rebalancing of gender and city‑level demographics**. While statistical significance is mixed, the magnitude of observed shifts warrants proactive strategic adjustments—particularly in product assortment, payment experience, and regional marketing—to capitalize on growth areas and mitigate risks associated with declining categories.
+
+
+================================================================================
+## num_cat_eda
+================================================================================
+
+**Executive Summary – NUM‑CAT Exploratory Analysis**
+
+---
+
+### 1. Significant group differences (numerical features vs. categorical segments)  
+The only formal significance tests supplied are the Welch t‑tests and Mann‑Whitney U comparisons for the binary “Returned / Not Returned” split.  
+
+| Feature | Comparison | Parametric p‑value | Non‑parametric p‑value | Interpretation |
+|---------|------------|-------------------|------------------------|----------------|
+| **Age** | Not Returned vs. Returned | 0.69 (ns) | 0.42 (ns) | No evidence of a age‑related return effect. |
+| **Quantity** | Not Returned vs. Returned | 0.19 (ns) | 0.11 (ns) | Quantity does not differ by return status. |
+| **Unit Price** | Not Returned vs. Returned | 0.34 (ns) | 0.12 (ns) | Unit price is independent of return status. |
+| **Discount** | Not Returned vs. Returned | 0.93 (ns) | 0.88 (ns) | Discount levels are comparable for returned and not‑returned orders. |
+| **Rating** | Not Returned vs. Returned | **0.06** (borderline) | 0.11 (ns) | Parametric test hints at a small difference; non‑parametric does not confirm. |
+| **Delivery Days** | Not Returned vs. Returned | 0.56 (ns) | 0.67 (ns) | Delivery time does not differ by return status. |
+| **Total Amount** | Not Returned vs. Returned | 0.37 (ns) | **0.05** (borderline) | Non‑parametric test suggests a modest increase in spend for returned orders; parametric test does not reach significance. |
+
+*Aside from the borderline cases for **Rating** and **Total Amount**, none of the numeric features show statistically significant differences across the “Returned / Not Returned” groups. Consequently, the bulk of the descriptive differences (e.g., higher mean age for “Other” gender, higher unit price for “Female”, higher total amount for “Other” customers) are **not** supported by formal significance testing and should be treated as descriptive patterns rather than proven effects.*
+
+---
+
+### 2. Parametric vs. non‑parametric findings  
+
+* **Overall agreement** – For Age, Quantity, Unit Price, Discount, Delivery Days the two approaches reach the same conclusion (no significant difference).  
+* **Discrepancies** –  
+  * **Rating**: Welch’s t‑test (p ≈ 0.06) suggests a possible difference, whereas Mann‑Whitney U (p ≈ 0.11) does not. The effect is small (≈ 0.03 rating points).  
+  * **Total Amount**: Mann‑Whitney U (p ≈ 0.053) hints at a higher spend for returned orders, while the Welch t‑test (p ≈ 0.37) finds no significant difference. The mean difference (~ 649) represents roughly a 5 % lift, which could be practically relevant despite the statistical ambiguity.  
+
+Overall, the parametric and non‑parametric tests are consistent for most variables; the only notable divergence lies in the marginal significance of Rating and Total Amount.
+
+---
+
+### 3. Pairwise group insights (descriptive, post‑hoc style)  
+
+| Variable | Notable pairwise differences (means/medians) |
+|----------|---------------------------------------------|
+| **Age** | *Gender*: Other (32.84) > Male (32.30) ≈ Female (32.27). <br>*City*: Bengaluru (31.78) < Ahmedabad (32.64) ≈ Delhi (32.27). |
+| **Quantity** | *Gender*: Other (1.93) > Female (1.91) ≈ Male (1.88). <br>*City*: Guntur (1.94) > Kolkata (1.88) ≈ Mumbai (1.92). |
+| **Unit Price** | *Gender*: Female (7,510) > Male (7,331) > Other (7,238). <br>*City*: Bengaluru (8,133) > Ahmedabad (7,814) > Guntur (6,596). |
+| **Discount** | Slightly higher for “Other” (12.08) vs. Male (11.96); all groups sit around 12 %. |
+| **Rating** | *Gender*: Male (3.87) ≈ Female (3.87) > Other (3.85). <br>*City*: Warangal (3.87) ≈ Kolkata (3.89) > Chennai (3.83). |
+| **Delivery Days** | *Gender*: Other (4.51) > Female (4.49) ≈ Male (4.47). <br>*City*: Guntur (4.56) > Hyderabad (4.54) ≈ Kolkata (4.49). |
+| **Total Amount** | *Gender*: Other (13,963) > Female (12,925) > Male (12,098). <br>*City*: Bengaluru (13,928) ≈ Visakhapatnam (13,395) > Guntur (10,977). |
+| **Product‑level** (selected) | *Electronics*: Highest unit price (23,143) and total amount (39,440). <br>*Books*: Lowest unit price (777) and total amount (1,297). <br>*Hair Dryer*: Highest rating (3.99) and relatively high total amount (3,733). <br>*Shoes*: Lowest delivery days (4.25) and moderate total amount (4,017). |
+
+These patterns highlight where the data **visually** diverge, even though formal tests rarely flag them as significant.
+
+---
+
+### 4. Practical significance (effect‑size perspective)  
+
+*Effect‑size metrics are not supplied in the workbook; consequently, quantitative assessment of practical importance (e.g., Cohen’s d, η²) cannot be performed.  
+
+Nevertheless, the **magnitude of observed differences** can be examined:
+
+* **Rating** – The largest observed mean gap (Male 3.87 vs. Other 3.85) is ≈ 0.02 points on a 5‑point scale (< 0.5 % of the scale range). This is unlikely to have a material business impact.  
+* **Total Amount** – The mean difference between returned (13,136) and not‑returned (12,487) orders is ≈ 649, i.e., about **5 % of the mean total spend**. If the returned‑order cohort represents a meaningful customer segment (e.g., high‑value purchasers), the commercial impact could be non‑trivial despite the borderline p‑value.  
+* **Unit Price** – Female customers pay roughly **2 %** more per unit than males (7,510 vs. 7,331). Given the volume of transactions, this translates into a measurable revenue contribution.  
+
+In the absence of formal effect‑size values, the above qualitative estimates are the best indication of practical relevance.
+
+---
+
+### 5. Key business implications & patterns  
+
+| Insight | Business implication |
+|---------|----------------------|
+| **Gender‑linked pricing** – Female customers have higher average unit prices, yet similar purchase quantities. This suggests a potential upside: targeting female shoppers with premium‑priced or higher‑margin items could increase revenue. |
+| **City‑level price variation** – Bengaluru and Hyderabad command the highest unit prices, while Guntur and other Tier‑2 cities show lower prices. Pricing strategies may need to be regionalised; higher prices in metro‑type cities could be justified by higher disposable income or lower price sensitivity. |
+| **Product‑category revenue drivers** – Electronics and Home & Kitchen categories generate the largest total amounts (≈ 39 M and ≈ 23 M respectively) and also exhibit high unit prices. These categories merit focused inventory, promotion, and margin‑optimization efforts. |
+| **Return behaviour** – While return rates do not differ significantly by age, gender, or city, returned orders show a modestly higher total amount and slightly higher rating scores. This may indicate that **higher‑value or higher‑satisfaction purchases are more likely to be returned** (e.g., fit‑issues, change‑of‑mind). Monitoring return reasons and correlating them with product type and price could reduce return rates. |
+| **Delivery time heterogeneity** – Certain products (Cookware Set, Hair Dryer, Shoes) and cities (Guntur, Hyderabad) have higher average delivery days. Lengthy delivery cycles can erode customer satisfaction and increase logistics costs; targeted process improvements or localized fulfillment hubs may be warranted. |
+| **Customer‑lifetime value (CLV)** – The “Other” gender segment, despite being a small sample (n = 439), commands the highest total amount (≈ 14 M) and unit price, suggesting a niche high‑value customer base. Tailored marketing or loyalty programs for this segment could amplify revenue. |
+| **Age stability** – Age distributions are remarkably consistent across gender, city, product, and payment method. Age is not a driver of any observed behavioural differences, implying that age‑based segmentation may have limited ROI. |
+| **Quantity uniformity** – Median quantity per order is 2 across all demographic groups, indicating a standard purchase basket size. Variations are minimal, so upselling or bundling strategies should focus on product mix rather than order frequency. |
+
+**Overall take‑away:** The data reveal clear **price and spend differentials** across gender, city, and product categories, while **behavioural differences (returns, ratings, delivery days) are subtle and only marginally statistically significant**. Business actions should therefore prioritize **pricing optimisation, targeted marketing to high‑value segments, logistics optimisation for high‑delivery‑time items, and close monitoring of returned‑order patterns** rather than age‑based or broad demographic campaigns.
+
+
+================================================================================
+## num_datetime_eda
+================================================================================
+
+**Executive Summary – Temporal Behaviour of Key Order‑Level Metrics (Jan 2025 – Dec 2026)**  
+
+---
+
+### 1. Directional Trends, Seasonality & Cyclical Patterns  
+* **Overall trend strength** – The *Trend_Summary* table reports “Very weak / No clear trend” for every numeric feature (Spearman ρ ≈ ±0.01, p‑values > 0.14).  Consequently, no sustained upward or downward trajectory is evident across the 729‑day horizon.  
+* **Monthly seasonality (Period_Summary, frequency = M)** –  
+  * **Delivery_Days**: Peaks in the final month (Dec 2026 = 4.588 days) and troughs in Apr 2026 (4.248 days).  A modest year‑end slowdown is visible.  
+  * **Total_Amount**: Highest average value in Jun 2026 (15 004.3) and lowest in Feb 2025 (10 060.5).  A clear mid‑year uplift recurs each year.  
+  * **Unit_Price**: Highest in Jul 2026 (8 559.3) and lowest in Feb 2025 (6 290.9).  Price spikes appear during the summer months.  
+  * **Discount**: Highest in Jun 2026 (12.81) and again in Nov 2026 (12.46); the lowest discount occurs in Sep 2025 (11.29).  Discount intensity therefore follows a summer‑autumn cycle.  
+  * **Age**: Mean age rises from ~31.9 in the first half of 2025 to ~32.9 in Nov 2026, indicating a gradual ageing of the customer base toward the end of the observation window.  
+
+These periodic peaks (June–July for amount & discount, spring for quantity, year‑end for delivery time) suggest **seasonal promotional campaigns or inventory cycles** that modulate order size, pricing, and fulfillment speed.
+
+---
+
+### 2. Strength & Direction of Monotonic (Spearman) Relationships Over Time  
+* All Spearman time‑correlations are **very weak** (|ρ| ≤ 0.0119) with **p‑values > 0.14**, except Age (ρ = 0.0106, p = 0.194) and Discount (ρ = 0.0058, p = 0.481).  None cross the conventional significance threshold (p < 0.05).  
+* **Interpretation** – Temporal monotonic links between the variables and order date are negligible; the data do not support a strong causal or linear time‑dependent relationship for any metric.
+
+---
+
+### 3. Insights from Temporal Aggregations (Monthly Periods)  
+* **Peak Volumes & Baseline Shifts** –  
+  * **Total_Amount** and **Discount** reach their maximum monthly averages in **June 2026** (≈ 15 k and 12.8 % respectively).  This aligns with the observed price peak in July, hinting at a coordinated promotional period that drives both spend and discount usage.  
+  * **Quantity** is highest in **April 2025** (2.01 items) and remains elevated through the spring months, suggesting a seasonal demand surge that precedes the summer price peak.  
+  * **Delivery_Days** show the longest average delivery time in **December 2026** (4.59 days) versus a low of 4.25 days in January 2026, implying a year‑end fulfillment bottleneck.  
+* **Baseline Shifts** – The *average_period_mean* for **Age** drifts upward from 32.56 (May 2025) to 32.91 (Nov 2026), a ~1 % increase that may reflect a growing proportion of older or higher‑value customers toward the year’s end.
+
+---
+
+### 4. Volatility, Smoothing & Anomaly Signals (Rolling 7‑Day Window)  
+| Metric | Latest Value | 7‑Day Rolling Mean | % vs Rolling Mean | Notable Observation |
+|--------|--------------|-------------------|-------------------|---------------------|
+| **Discount** | 0 | 6.43 | **‑100 %** | Sudden collapse to zero – potential data‑entry error or promotion termination. |
+| **Rating** | 2.5 | 3.93 | **‑36 %** | Sharp decline; may signal a temporary dip in customer satisfaction. |
+| **Delivery_Days** | 7 | 5.43 | **+29 %** | Elevated delivery time relative to recent history – possible logistics strain. |
+| **Age** | 25 | 34.86 | **‑28 %** | Unusual drop; could indicate a shift in the age distribution (e.g., new younger cohort). |
+| **Total_Amount** | 3 740.28 | 3 060.59 | **+22 %** | Strong upward spike; may reflect a high‑value order or batch of orders. |
+| **Unit_Price** | 1 870.14 | 2 368.07 | **‑21 %** | Marked decrease; could be a pricing promotion or a shift to lower‑priced SKUs. |
+| **Quantity** | 2 | 1.86 | **+7 %** | modest increase, consistent with normal variance. |
+
+* **Volatility** – The rolling standard deviations (e.g., 11.07 for Discount, 1799.25 for Total_Amount) reveal **high variance** in discount and revenue metrics, while Quantity and Delivery_Days are comparatively stable.  
+* **Anomalies** – The zero Discount value, the 28 % drop in Age, and the 22 % surge in Total_Amount are the most pronounced deviations from the recent rolling mean and merit immediate data‑quality checks and deeper investigation.
+
+---
+
+### 5. Actionable Business Implications, Risks & Forecasting Recommendations  
+
+| Area | Insight | Business Implication | Recommended Action |
+|------|---------|----------------------|--------------------|
+| **Delivery Performance** | Delivery times peak in Dec 2026 (4.59 days) and show a 29 % increase vs rolling mean on the latest day. | Potential fulfillment bottlenecks during the holiday season could erode customer satisfaction and increase churn. | • Deploy additional staff or automation in Q4.<br>• Implement real‑time delivery‑time monitoring and trigger alerts when > 4 days.<br>• Use the 7‑day rolling mean to smooth daily fluctuations for early‑warning dashboards. |
+| **Revenue & Pricing** | Total_Amount spikes in Jun/Jul (≈ +22 % vs rolling mean) while Unit_Price falls sharply (‑21 %). Discount also peaks in Jun (12.8 %). | A promotional period drives higher spend but with lower average unit prices and higher discount usage, compressing margins. | • Analyse the composition of high‑value orders in Jun/Jul to understand drivers (SKU mix, bundle offers).<br>• Model margin impact of discount intensity; consider caps or tiered discount structures to protect profitability.<br>• Forecast revenue using a seasonal decomposition (monthly) that captures the June‑July uplift. |
+| **Customer Age & Satisfaction** | Age shows a modest upward trend toward Dec 2026; Rating drops 36 % on the latest day. | An aging customer base may have different purchasing behaviour; a recent dip in rating could foreshadow churn. | • Segment customers by age cohort and monitor satisfaction trends.<br>• Investigate the cause of the recent rating decline (e.g., service issue, product change). |
+| **Discount Management** | Discount collapses to zero on the last day, a 100 % deviation from its rolling mean. | Unexpected loss of discount may affect price perception and could be a data glitch. | • Validate the zero‑discount record; confirm whether it reflects a real promotion end or a data entry error.<br>• Incorporate discount volatility into risk models; consider smoothing with a longer rolling window to reduce noise. |
+| **Quantity & Order Size** | Quantity peaks in Apr 2025 (2.01) and remains relatively stable; no clear trend. | Order size is a stable driver; fluctuations are minor. | • Use the stable quantity pattern to benchmark inventory planning; no major capacity adjustments required. |
+| **Forecasting Approach** | Weak overall trends, strong monthly seasonality, and high volatility in revenue‑related metrics. | Traditional linear time‑series models may under‑perform. | • Apply **seasonal ARIMA / Prophet** models with explicit monthly seasonality.<br>• Augment with **rolling‑average features** (7‑day, 30‑day) to capture short‑term volatility.<br>• Conduct sensitivity analysis on discount and unit‑price assumptions, given their high variance. |
+
+**Key Risks**  
+* **Data quality** – The extreme drop in Discount (0) and Rating (2.5) suggests possible reporting anomalies that could mislead decision‑making.  
+* **Margin erosion** – High discount levels coupled with lower unit prices in the summer months may pressure gross margins if not managed.  
+* **Fulfillment capacity** – Year‑end delivery‑time extensions could impact service level agreements and customer retention.
+
+**Strategic Recommendations**  
+1. **Seasonal Planning** – Align inventory, staffing, and promotional budgets with the identified June‑July demand surge and the December delivery‑time peak.  
+2. **Margin Guardrails** – Introduce discount caps or tiered rebate structures during high‑discount months to protect profitability.  
+3. **Real‑time Monitoring** – Deploy rolling‑mean dashboards for Delivery_Days, Total_Amount, and Discount to detect anomalies early.  
+4. **Customer Insight** – Track age‑segmented satisfaction (Rating) and churn risk, especially as the average age climbs toward the end of the horizon.  
+
+By leveraging the observed seasonal patterns, smoothing volatile metrics, and addressing the identified anomalies, the business can improve forecast accuracy, safeguard margins, and enhance operational resilience across the 2025‑2026 period.
+
+
+================================================================================
+## num_num_eda
+================================================================================
+
+**Executive Summary – Bivariate Relationships Across Sales‑Related Variables**  
+
+**Scope** – The analysis is based exclusively on the four pre‑calculated bivariate metric tables (Pearson, Spearman, Kendall, Mutual Information) derived from a 15 000‑record Excel workbook. No external data or assumptions were introduced.  
+
+---
+
+### 1. Strong Linear Relationships (Pearson)
+
+| Pair (Feature 1 ↔ Feature 2) | Pearson r | p‑value | Interpretation |
+|------------------------------|-----------|---------|----------------|
+| **Unit_Price ↔ Total_Amount** | **0.835066** | **0** (statistically significant) | A near‑perfect positive linear association – total sales amount is driven almost entirely by the price per unit. |
+| **Quantity ↔ Total_Amount** | 0.255942 | 5.72 × 10⁻²²³ | Moderate positive linear link – larger order quantities raise total amount, though the relationship is weaker than price‑amount. |
+| All other pairs | | | **Absolute r ≤ 0.04** and p‑values > 0.05 (except the two above), indicating negligible linear dependence. |
+
+**Key takeaway:** *Unit price and total amount constitute the only robust linear relationship in the dataset.* Business processes that adjust unit price will have a direct, measurable impact on revenue.
+
+---
+
+### 2. Monotonic / Rank‑Based Trends (Spearman & Kendall)
+
+| Pair | Spearman ρ | Kendall τ | p‑value | Direction |
+|------|------------|----------|---------|-----------|
+| **Unit_Price ↔ Total_Amount** | **0.867733** | **0.696873** | 0 | Strong positive monotonic trend (consistent with Pearson). |
+| **Quantity ↔ Total_Amount** | 0.439993 | 0.34405 | 0 | Positive monotonic association, confirming that larger order sizes increase total spend. |
+| **Discount ↔ Total_Amount** | –0.0834882 | –0.0608023 | 1.28 × 10⁻²⁴ | Negative monotonic trend – higher discount percentages are linked to lower total amounts, though the effect size is modest. |
+| All other pairs | | | | **|ρ|,|τ| ≤ 0.01** and p‑values > 0.05, indicating no meaningful rank‑based relationship. |
+
+**Key takeaway:** *Rank‑based metrics reinforce the linear picture: Unit price and quantity are the primary drivers of total amount; discount shows a weak inverse monotonic pattern.*
+
+---
+
+### 3. Non‑Linear Dependencies (Mutual Information)
+
+Mutual information captures any statistical dependence—linear or not—by measuring the reduction in uncertainty about one variable given the other.
+
+| Pair | Mutual Information (bits) | Direction of asymmetry |
+|------|---------------------------|------------------------|
+| **Quantity ↔ Total_Amount** | **0.362531** (≈ 0.36) | Symmetric – the amount of information each variable provides about the other is virtually identical. |
+| **Unit_Price ↔ Total_Amount** | **2.59112** | Symmetric – the relationship is extremely strong; knowing either variable predicts the other with high precision. |
+| **Quantity ↔ Delivery_Days** | 0.0116212 | Asymmetric – delivery time carries slightly more information about order quantity than vice‑versa (likely because larger orders may be scheduled for faster delivery). |
+| **Age ↔ Quantity** | 0.0111692 | Very weak; age contributes little to understanding order size. |
+| **Age ↔ Unit_Price**, **Age ↔ Total_Amount**, **Unit_Price ↔ Discount**, **Unit_Price ↔ Delivery_Days**, **Discount ↔ Rating**, etc. | 0 (or negligible) | No detectable non‑linear association. |
+
+**Key takeaway:** *The only substantive non‑linear dependencies are between **Quantity** and **Total_Amount**, and between **Unit_Price** and **Total_Amount**. All other variable pairs show negligible mutual information, indicating that any relationship they may have is essentially linear or absent.*
+
+---
+
+### 4. Business Insights & Patterns
+
+| Insight | Supporting Metrics | Business Implication |
+|---------|-------------------|----------------------|
+| **Price is the dominant lever for revenue** | Pearson r = 0.835 (Unit_Price ↔ Total_Amount); MI = 2.59 bits | Small changes in unit price will translate into large swings in total sales; pricing strategy should be a focal point for growth. |
+| **Order volume matters, but less than price** | Pearson r = 0.256 (Quantity ↔ Total_Amount); MI = 0.36 bits | Incentivising larger basket sizes (e.g., bundle offers) can boost revenue, but the impact is modest compared with price adjustments. |
+| **Discounts modestly reduce revenue** | Spearman ρ = –0.0835 (Discount ↔ Total_Amount); Kendall τ = –0.0608; Pearson r = –0.0412 (p < 0.001) | Aggressive discounting may erode total amount; targeted promotions rather than site‑wide discounts could preserve revenue. |
+| **Delivery time is weakly linked to order characteristics** | Weak negative correlations (e.g., Quantity ↔ Delivery_Days = –0.0097; Pearson p = 0.234) and very low MI values (≈ 0) | Delivery performance is not a strong predictor of order size or price; improvements in delivery speed are unlikely to affect revenue directly. |
+| **Customer age and rating show virtually no relationship to other variables** | All Pearson, Spearman, Kendall, and MI values ≤ 0.011; p‑values > 0.2; MI ≈ 0 | Age and customer rating are not useful predictors of purchase size or price; they may be relevant for segmentation or loyalty programs, but not for volume or revenue modeling. |
+
+---
+
+### 5. Anomalies & Limitations Noted in the Data
+
+1. **Zero‑variance pairs** – Mutual information is exactly 0 for several pairs (e.g., Age ↔ Unit_Price, Age ↔ Total_Amount, Unit_Price ↔ Discount). This signals that the variables are statistically independent; any observed association is due to random noise, not a true relationship.
+
+2. **Extreme p‑values** – The Pearson p‑value for Unit_Price ↔ Total_Amount is reported as “0,” indicating a p‑value smaller than the machine’s precision limit. This underscores the statistical certainty of the linear link.
+
+3. **Inconsistent directionality in MI** – For most pairs the two MI columns (feature 1 → feature 2 and feature 2 → feature 1) are identical, confirming symmetric dependence (e.g., Quantity ↔ Total_Amount). However, a few pairs (Age ↔ Quantity, Quantity ↔ Delivery_Days) show asymmetry, suggesting that the direction of information flow differs slightly—potentially reflecting that one variable has more distinct values or a more deterministic influence on the other.
+
+4. **Sample size uniformity** – All analyses use the same 15 000‑record sample, so the p‑values are comparable across metrics; however, the sheer size may inflate the sensitivity to tiny correlations (e.g., Age ↔ Quantity Pearson r = 0.011), which are statistically significant but practically irrelevant.
+
+---
+
+### 6. Recommendations for Stakeholders
+
+| Recommendation | Rationale |
+|----------------|-----------|
+| **Prioritize pricing analytics** – Invest in models that forecast revenue based on unit price changes, as this variable exhibits the strongest linear (Pearson r = 0.835) and rank (Spearman ρ = 0.868) relationship with total amount. |
+| **Bundle & volume incentives** – Since Quantity ↔ Total_Amount shows a moderate positive correlation (r = 0.256, MI = 0.36), targeted bundles or volume discounts can lift total sales without heavily compromising price. |
+| **Refine discount strategy** – The negative monotonic link (Spearman ρ = –0.0835) suggests that broad, indiscriminate discounts may reduce total revenue; consider tiered or performance‑based discounting. |
+| **Monitor delivery metrics separately** – Delivery days have weak, non‑significant relationships with other variables; focusing on delivery speed may improve customer satisfaction but is unlikely to impact revenue directly. |
+| **Leverage age and rating for segmentation, not revenue prediction** – Their negligible correlations indicate they are poor predictors of purchase size or price; they can be used for customer‑experience initiatives (e.g., age‑specific promotions, rating‑driven loyalty tiers) rather than financial forecasting. |
+| **Validate with higher‑frequency data** – The current 15 000‑record snapshot may mask short‑term fluctuations; periodic re‑analysis (e.g., monthly) will confirm whether the strong price‑revenue link persists. |
+
+---
+
+**Conclusion** – The bivariate analysis unequivocally identifies **unit price** and **order quantity** as the primary drivers of **total sales amount**, with a robust linear and monotonic relationship confirmed across Pearson, Spearman, Kendall, and mutual information metrics. All other examined variables (age, rating, discount, delivery days, etc.) exhibit either negligible or very weak associations, highlighting that revenue‑focused decisions should concentrate on pricing and volume levers rather than on customer age or rating characteristics.
+
