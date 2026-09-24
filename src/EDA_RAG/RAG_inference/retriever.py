@@ -33,7 +33,7 @@ from src.Utils.exception_handler import CustomException
 from src.Utils.logger_setup import get_log, track_performance
 
 
-class Retriever:
+class Retrieval_Service:
     """
     Retrieve relevant EDA evidence from the FAISS vector database.
 
@@ -46,7 +46,7 @@ class Retriever:
     components.
     """
 
-    def __init__(self, dataset_id: str = DEFAULT_DATASET_ID) -> None:
+    def __init__(self, dataset_id: str = DEFAULT_DATASET_ID, logger=None) -> None:
         """
         Initialize the Retriever.
 
@@ -59,7 +59,7 @@ class Retriever:
             ValueError: If dataset_id is empty.
         """
         RAG_LOG_DIR.mkdir(parents=True, exist_ok=True)
-        self.logger = get_log("Retriever", log_dir=RAG_LOG_DIR)
+        self.logger = logger or get_log("RAGInference", log_dir=RAG_LOG_DIR)
 
         try:
             if not isinstance(dataset_id, str):
@@ -284,4 +284,4 @@ class Retriever:
 
 
 
-retriever = Retriever()
+rag_retriever = Retrieval_Service()
