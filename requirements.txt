@@ -30,4 +30,6 @@ tabulate
 faiss-cpu
 huggingface_hub
 sentence-transformers
+langchain
+langgraph
 -e .
